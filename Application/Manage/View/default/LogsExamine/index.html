@@ -1,0 +1,156 @@
+<extend name="Public/base" />
+
+<block name="style">
+    <link href="/Public/Manage/media/css/style.css" rel="stylesheet">
+</block>
+
+<block name="body">
+
+<!--搜索中弹窗-->
+<div class="float hidden">
+    <h4 class="text-center">正在为您搜索...</h4>
+    <div class="bs-example m-callback">
+        <div class="style-content">
+            <img src="/Public/Manage/media/image/timg.gif">
+        </div>
+        <p><span class="label label-warning" id="m-callback-update">您需要耐心等待一会,不要刷新页面！</span></p>
+    </div>
+</div>
+
+<div class="row">
+    <!--错误输出-->
+    <div class="col-md-12 ">
+        <div class="alert alert-danger fade in hidden" id="alert_error">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <strong>Error!</strong> <span></span>
+        </div>
+    </div>
+
+	<div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                搜索异常记录
+            </header>
+            <form method="get" action="/manage/LogsExamine/search">
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-3 control-label">搜索类型</label>
+                            <div class="col-lg-4">
+                                <select class="form-control" name="search_type">
+                                    <option value="0">未通过审核记录</option>
+                                    <option value="1">已通过审核记录</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-3 control-label">搜索类型</label>
+                            <div class="col-lg-4">
+                                <select class="form-control" name="search_column">
+                                    <option value="name">姓名</option>
+                                    <option value="email">邮箱</option>
+                                    <option value="phone">电话</option>
+                                    <option value="idcardnumber">身份证/护照</option>
+                                    <option value="ip">ip</option>
+                                    <option value="user_address">地址</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-3 control-label">搜索值</label>
+                            <div class="col-lg-4">
+                                <input name="search_value" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-3 col-lg-9">
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+		<section class="panel">
+            <header class="panel-heading">
+               	异常记录列表
+            </header>
+            <div class="panel-body">
+	            
+            	<table class="table table-striped table-hover">
+		            <thead>
+		                <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>电话</th>
+                            <th>邮箱</th>
+                            <th>ip</th>
+                            <th>身份证/护照</th>
+                            <th>地址</th>
+                            <th>备注</th>
+                            <th>更新时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+		                </tr>
+		            </thead>
+            
+		            <tbody id="target">
+                        <foreach name="logs" item="log" >
+                            <tr>
+                                <th>{$log.id}</th>
+                                <th>{$log.name}</th>
+                                <th>{$log.phone}</th>
+                                <th>{$log.email}</th>
+                                <th>{$log.ip}</th>
+                                <th>{$log.idcardnumber}</th>
+                                <th>{$log.user_address}</th>
+                                <th>{$log.remark}</th>
+                                <th>{$log.updated_at}</th>
+                                <th>
+                                    <switch name="log.status">
+                                        <case value="0" break="1">未审核</case>
+                                        <case value="1" break="1">已审核</case>
+                                        <case value="2" break="1">拉黑</case>
+                                    </switch>
+                                </th>
+                                <th id="options">
+                                    <!--审核按钮-->
+                                    <switch name="log.status">
+                                        <case value="0" break="1"><button class="btn btn-info
+" onclick="location='/manage/LogsExamine/examine?id={$log.id}'">通过审核</button></case>
+                                        <case value="1" break="1"><button class="btn btn-warning
+" onclick="location='/manage/LogsExamine/examine?id={$log.id}'">取消审核</button></case>
+                                    </switch>
+                                    <button class="btn btn-danger
+" onclick="location='/manage/LogsExamine/delete?id={$log.id}'">删除</button>
+                                </th>
+                            </tr>
+                        </foreach>
+                    </tbody>
+		        </table>
+		        <ul class="pagination pull-left">
+
+                </ul>
+        	</div>
+    	</section>
+
+	</div>
+
+</div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function(){
+            $(".pagination").createPage({
+                totalPage:{$count},
+                currPage:{$current},
+                backFn:function(p){
+                    console.log("回调函数："+p);
+                }
+            });
+        });
+
+    </script>
+    <script src="/Public/Manage/js/paging.js"></script>
+</block>
