@@ -25,10 +25,10 @@ class Policies
      *
      * @param $user_id
      */
-    public function status($array)
+    public function status($user_id)
     {
         //获取status
-        $status = $this->user->field('status')->where('id = %d', $array[0])->find()['status'] ? : 0;
+        $status = $this->user->field('status')->where('id = %d', $user_id)->find()['status'] ? : 0;
 
         if ($status === 1) {
             return true;
@@ -43,13 +43,13 @@ class Policies
      * @param $user_id
      * @return bool
      */
-    public function isAdmin($array)
+    public function isAdmin($user_id)
     {
         //获取超级管理员配置
         $super_admin = $this->policies['SUPER_ADMIN_ID'];
 
         foreach ($super_admin as $value) {
-            if ($value == $array[0]) {
+            if ($value == $user_id) {
                 return true;
             }
         }
@@ -57,13 +57,13 @@ class Policies
         return false;
     }
 
-    public function can($array)
+    public function can($user_id, $option)
     {
         //获取用户组
-        $group = $this->user->field('group')->where('id = %d', $array[0])->find()['group'] ? : 0;
+        $group = $this->user->field('group')->where('id = %d', $user_id)->find()['group'] ? : 0;
 
         //超级管理员跳过验证
-        if ($this->isAdmin($array[0])) {
+        if ($this->isAdmin($user_id)) {
             return true;
         }
 
@@ -74,7 +74,7 @@ class Policies
         $can = $this->policies[$type];
 
         foreach ($can as $item) {
-            if ($item == $array[1]) {
+            if ($item == $option) {
                 return true;
             }
         }

@@ -15,7 +15,6 @@ if (! function_exists('response')) {
     }
 }
 
-
 if (! function_exists('can')) {
     /**
      * 全局使用独立权限控制
@@ -28,7 +27,7 @@ if (! function_exists('can')) {
     {
         $policise = new \Manage\Policies\Policies();
 
-        return $policise->$function($array);
+        return call_user_func_array([$policise, $function], $array);
     }
 }
 
