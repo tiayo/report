@@ -1,8 +1,5 @@
 <?php
 return array(
-
-
-    'ADMIN_AUTH_KEY' => 'miao',
 	'URL_CASE_INSENSITIVE'  =>  true,   // 默认false 表示URL区分大小写 true则表示不区分大小写
 	'DEFAULT_THEME' => 'default', //默认主题
     
@@ -15,14 +12,6 @@ return array(
         '__STATIC__' => __ROOT__ . '/Public/Static',
         '__UPLOADS__' => __ROOT__ . '/Uploads',
         '__MEDIA__' => __ROOT__ . '/Public/' . MODULE_NAME . '/media'
-    ),
-
-    'AUTH_CONFIG' => array(
-        'AUTH_GROUP'        => 'mt4_admin_group',        // 用户组数据表名
-        'AUTH_GROUP_ACCESS' => 'mt4_admin_group_access', // 用户-用户组关系表
-        'AUTH_RULE'         => 'mt4_admin_rule',         // 权限规则表
-        'AUTH_USER'         => 'mt4_admin' ,
-        // 'AUTH_ON'           => false, 
     ),
     /* SESSION 和 COOKIE 配置 */
     'SESSION_PREFIX' => 'mt_manage', //session前缀
