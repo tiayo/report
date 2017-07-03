@@ -42,6 +42,11 @@ class LoginService
             throw new \Exception('平台商不存在或输入错误!');
         }
 
+        //验证激活状态
+        if ($user['status'] != 1) {
+            throw new \Exception('用户状态为未通过审核，请稍等!');
+        }
+
         //数据库存储密码
         $origin_password = $user['password'];
 
