@@ -28,7 +28,7 @@ if (! function_exists('can')) {
     {
         $policise = new \Manage\Policies\Policies();
 
-        return $policise->$function(...$array);
+        return $policise->$function($array);
     }
 }
 
