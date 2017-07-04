@@ -16,9 +16,6 @@ class LogsController extends Controller
     {
         parent::__construct();
 
-        //登录中间件(未登录跳转到登录页面)
-        Auth::check();
-
         //实例化业务逻辑
         $this->logs = new LogsService();
 
@@ -43,6 +40,10 @@ class LogsController extends Controller
      */
     public function create()
     {
+
+        //登录中间件(未登录跳转到登录页面)
+        Auth::check();
+
         //获取结果信息
         $this->assign('creat_report', session('creat_report') ? : null);
 
@@ -60,6 +61,10 @@ class LogsController extends Controller
      */
     public function createPost()
     {
+
+        //登录中间件(未登录跳转到登录页面)
+        Auth::check();
+
         try{
             $this->logs->createPost(I('post.'));
         } catch (\Exception $e) {
@@ -113,6 +118,10 @@ class LogsController extends Controller
      */
     public function api()
     {
+
+        //登录中间件(未登录跳转到登录页面)
+        Auth::check();
+
         //传入参数
         $this->assign('token', $this->logs->token(session('user.id')));
         $this->assign('requency', $this->logs->requency(session('user.id')));
@@ -126,6 +135,10 @@ class LogsController extends Controller
      */
     public function ajaxToken()
     {
+
+        //登录中间件(未登录跳转到登录页面)
+        Auth::check();
+
         $this->ajaxReturn($this->logs->generate(session('user.id')));
     }
 

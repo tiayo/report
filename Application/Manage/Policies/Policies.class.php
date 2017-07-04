@@ -30,7 +30,7 @@ class Policies
         //获取status
         $status = $this->user->field('status')->where('id = %d', $user_id)->find()['status'] ? : 0;
 
-        if ($status === 1) {
+        if ($status == 1) {
             return true;
         }
 

@@ -76,7 +76,9 @@
             <div class="col-md-10">
                 <!--toggle button start-->
                 <a class="toggle-btn"><i class="fa fa-bars"></i></a>
-                <a class="pull-right" style="line-height: 50px;" href="/manage/logout">退出登录</a>
+                <if condition="can('status', [session('user.id') ? : 0])">
+                    <a class="pull-right" style="line-height: 50px;" href="/manage/logout">退出登录</a>
+                </if>
                 <!--toggle button end-->
             </div>
         </div>
